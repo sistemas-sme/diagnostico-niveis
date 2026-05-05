@@ -69,6 +69,12 @@ export default function TurmaDetailPage({ params }: { params: Promise<{ id: stri
     router.push('/admin');
   }
 
+  async function handleDeleteResposta(respostaId: string) {
+    if (!confirm('Tem certeza que deseja excluir esta resposta?')) return;
+    const res = await fetch(`/api/respostas/${respostaId}`, { method: 'DELETE' });
+    if (res.ok) fetchData();
+  }
+
   const nivelMedio =
     respostas.length > 0
       ? (respostas.reduce((sum, r) => sum + r.nivel, 0) / respostas.length).toFixed(1)
@@ -202,7 +208,7 @@ export default function TurmaDetailPage({ params }: { params: Promise<{ id: stri
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.06]">
-                    {['Nome', 'Empresa', 'Email', 'WhatsApp', 'Nível', 'Data'].map((col) => (
+                    {['Nome', 'Empresa', 'Nível', 'Data', ''].map((col) => (
                       <th
                         key={col}
                         className="text-left px-6 py-3 text-[10px] font-bold tracking-[0.12em] text-white/30 uppercase"
@@ -217,14 +223,25 @@ export default function TurmaDetailPage({ params }: { params: Promise<{ id: stri
                     <tr key={r.id} className="border-b border-white/[0.05] hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-3 text-white/70 font-medium">{r.nome || '–'}</td>
                       <td className="px-6 py-3 text-white/60">{r.empresa || '–'}</td>
-                      <td className="px-6 py-3 text-white/60">{r.email || '–'}</td>
-                      <td className="px-6 py-3 text-white/60">{r.whatsapp || '–'}</td>
                       <td className="px-6 py-3">
                         <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[#00c8be]/10 border border-[#00c8be]/20 text-[#00c8be] font-bold text-xs">
                           {r.nivel}
                         </span>
                       </td>
                       <td className="px-6 py-3 text-white/40">{formatDate(r.created_at)}</td>
+                      <td className="px-6 py-3">
+                        <button
+                          onClick={() => handleDeleteResposta(r.id)}
+                          className="text-white/20 hover:text-red-400 transition-colors cursor-pointer"
+                          title="Excluir resposta"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M3 6h18" />
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                          </svg>
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
