@@ -28,8 +28,6 @@ const NIVEL_INFO: Record<number, { nome: string; frase: string }> = {
   },
 };
 
-const CTA_URL = process.env.NEXT_PUBLIC_CTA_URL || '#';
-
 const fadeUp = (delay: number, duration = 0.5) => ({
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -160,39 +158,8 @@ function ResultadoContent() {
           </div>
         </motion.div>
 
-        {/* CTA section */}
+        {/* Actions */}
         <motion.div {...fadeUp(0.75)} className="space-y-3">
-          <p className="text-center text-sm text-white/40 font-medium">
-            Pronto para subir de nível?
-          </p>
-
-          {/* Primary CTA */}
-          <a href={CTA_URL} target="_blank" rel="noopener noreferrer" className="block">
-            <motion.button
-              whileTap={{ scale: 0.97 }}
-              whileHover={{ scale: 1.01, filter: 'brightness(1.08)' }}
-              className="group w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-base text-black bg-gradient-to-r from-[#00c8be] to-[#008c88] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#00c8be]/50 cursor-pointer"
-              style={{ boxShadow: '0 0 30px rgba(0,200,190,0.25)' }}
-            >
-              Quero participar
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="transition-transform duration-200 group-hover:rotate-45"
-              >
-                <path d="M7 7h10v10" />
-                <path d="M7 17 17 7" />
-              </svg>
-            </motion.button>
-          </a>
-
           {/* Share button */}
           <motion.button
             whileTap={{ scale: 0.97 }}
