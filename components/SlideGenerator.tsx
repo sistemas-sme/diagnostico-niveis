@@ -11,7 +11,7 @@ const NIVEL_NOMES: Record<number, string> = {
   5: 'Jogo Infinito',
   4: 'Equity',
   3: 'Escala',
-  2: 'Drone',
+  2: 'Inevitável',
   1: 'Visão',
 };
 
@@ -29,6 +29,7 @@ function drawSlide(
 
   const ctx = canvas.getContext('2d')!;
   const maxCount = Math.max(...stats.map((s) => s.count), 0);
+  const maxPercent = Math.max(...stats.map((s) => s.percent), 0);
 
   // ── Background ────────────────────────────────────────────────
   ctx.fillStyle = '#030718';
@@ -85,8 +86,10 @@ function drawSlide(
 
   NIVEIS_ORDER.forEach((nivel, index) => {
     const stat = stats.find((s) => s.nivel === nivel) ?? { nivel, count: 0, percent: 0 };
-    const isMostPopular = maxCount > 0 && stat.count === maxCount;
-    const hasData = stat.count > 0;
+    const isMostPopular = maxCount > 0
+      ? stat.count === maxCount
+      : maxPercent > 0 && stat.percent === maxPercent;
+    const hasData = stat.count > 0 || stat.percent > 0;
 
     const relY1 = index * (LAYER_H + GAP);
     const relY2 = relY1 + LAYER_H;
@@ -158,8 +161,10 @@ function drawSlide(
 
   NIVEIS_ORDER.forEach((nivel, index) => {
     const stat = stats.find((s) => s.nivel === nivel) ?? { nivel, count: 0, percent: 0 };
-    const isMostPopular = maxCount > 0 && stat.count === maxCount;
-    const hasData = stat.count > 0;
+    const isMostPopular = maxCount > 0
+      ? stat.count === maxCount
+      : maxPercent > 0 && stat.percent === maxPercent;
+    const hasData = stat.count > 0 || stat.percent > 0;
 
     const rowY = SY + index * (LAYER_H + GAP) + ROW_H / 2;
 
@@ -176,22 +181,28 @@ function drawSlide(
     ctx.fillStyle = isMostPopular ? 'white' : 'rgba(255,255,255,0.45)';
     ctx.fillText(NIVEL_NOMES[nivel], SX + 60, rowY - 16);
 
-    // Count (big)
-    ctx.font = `900 80px sans-serif`;
-    ctx.fillStyle = isMostPopular
-      ? '#00c8be'
-      : hasData
-      ? 'rgba(255,255,255,0.50)'
-      : 'rgba(255,255,255,0.12)';
-    ctx.textAlign = 'right';
-    ctx.fillText(String(stat.count), SX + 760, rowY + 28);
+    // Count (big) — only show if count > 0
+    if (stat.count > 0) {
+      ctx.font = `900 80px sans-serif`;
+      ctx.fillStyle = isMostPopular
+        ? '#00c8be'
+        : hasData
+        ? 'rgba(255,255,255,0.50)'
+        : 'rgba(255,255,255,0.12)';
+      ctx.textAlign = 'right';
+      ctx.fillText(String(stat.count), SX + 760, rowY + 28);
+    }
 
     // Percent
-    ctx.font = 'bold 36px sans-serif';
+    const percentStr = Number.isInteger(stat.percent) ? `${stat.percent}%` : `${stat.percent}%`;
+    ctx.font = stat.count === 0 ? '900 80px sans-serif' : 'bold 36px sans-serif';
     ctx.fillStyle = isMostPopular
       ? 'rgba(0,200,190,0.75)'
+      : stat.percent > 0
+      ? 'rgba(255,255,255,0.50)'
       : 'rgba(255,255,255,0.22)';
-    ctx.fillText(`${stat.percent}%`, SX + 960, rowY + 28);
+    ctx.textAlign = 'right';
+    ctx.fillText(percentStr, SX + 960, rowY + 28);
 
     // Row divider
     if (index < 4) {
@@ -200,11 +211,13 @@ function drawSlide(
     }
   });
 
-  // Total respondentes
-  ctx.font = '500 20px sans-serif';
-  ctx.fillStyle = 'rgba(255,255,255,0.25)';
-  ctx.textAlign = 'right';
-  ctx.fillText(`${total} respondente${total !== 1 ? 's' : ''}`, SX + 960, SY + TOTAL_PY_H + 36);
+  // Total respondentes (hide when count is 0, e.g. default image)
+  if (total > 0) {
+    ctx.font = '500 20px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${total} respondente${total !== 1 ? 's' : ''}`, SX + 960, SY + TOTAL_PY_H + 36);
+  }
 
   // ── Bottom bar ────────────────────────────────────────────────
   ctx.fillStyle = 'rgba(255,255,255,0.06)';
@@ -231,9 +244,15 @@ export default function SlideGenerator({ turma, stats }: SlideGeneratorProps) {
     requestAnimationFrame(() => {
       const canvas = document.createElement('canvas');
       const displayStats = isDefault
-        ? NIVEIS_ORDER.map((n) => ({ nivel: n, count: 0, percent: 0 }))
+        ? [
+            { nivel: 5, count: 0, percent: 2.6 },
+            { nivel: 4, count: 0, percent: 9.2 },
+            { nivel: 3, count: 0, percent: 11 },
+            { nivel: 2, count: 0, percent: 21.2 },
+            { nivel: 1, count: 0, percent: 56 },
+          ]
         : stats;
-      const displayName = isDefault ? 'Imagem Padrão' : turma.nome;
+      const displayName = isDefault ? 'Diagnóstico de Consciência Empresarial' : turma.nome;
 
       drawSlide(canvas, displayName, displayStats);
 

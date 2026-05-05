@@ -18,7 +18,7 @@ export type Resposta = {
 
 export type Resultado = {
   nivel: 1 | 2 | 3 | 4 | 5;
-  nome: "Visão" | "Drone" | "Escala" | "Equity" | "Jogo Infinito";
+  nome: "Visão" | "Inevitável" | "Escala" | "Equity" | "Jogo Infinito";
   total: number;
   frase: string;
 };

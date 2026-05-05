@@ -8,7 +8,7 @@ const NIVEIS = [
   { nivel: 5, nome: 'Jogo Infinito' },
   { nivel: 4, nome: 'Equity' },
   { nivel: 3, nome: 'Escala' },
-  { nivel: 2, nome: 'Drone' },
+  { nivel: 2, nome: 'Inevitável' },
   { nivel: 1, nome: 'Visão' },
 ];
 

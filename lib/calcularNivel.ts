@@ -19,7 +19,7 @@ export function calcularNivel(respostas: Resposta[]): Resultado {
     nome = "Visão";
   } else if (total <= 22) {
     nivel = 2;
-    nome = "Drone";
+    nome = "Inevitável";
   } else if (total <= 32) {
     nivel = 3;
     nome = "Escala";

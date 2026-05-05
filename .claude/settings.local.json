@@ -14,7 +14,19 @@
       "Bash(ls /Users/sme/Documents/Claude/Projects/Diagnóstico/*.ts /Users/sme/Documents/Claude/Projects/Diagnóstico/middleware*)",
       "Bash(pkill -f \"next dev\")",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git remote:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(gh --version)",
+      "Bash(gh auth:*)",
+      "Bash(gh run:*)",
+      "Bash(npx vercel:*)",
+      "Bash(git fetch:*)",
+      "Bash(git ls-remote:*)",
+      "Bash(git config:*)"
     ]
   }
 }

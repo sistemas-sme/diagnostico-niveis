@@ -11,7 +11,7 @@ const NIVEL_INFO: Record<number, { nome: string; frase: string }> = {
     frase: 'Você está jogando o jogo de 90% dos empresários brasileiros. É hora de subir.',
   },
   2: {
-    nome: 'Drone',
+    nome: 'Inevitável',
     frase: 'Você acendeu os primeiros fósforos do quarto escuro. Bom começo.',
   },
   3: {
