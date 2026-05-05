@@ -16,8 +16,6 @@ function HomeContent() {
   const [form, setForm] = useState({
     nome: '',
     empresa: '',
-    email: '',
-    whatsapp: '',
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -106,8 +104,6 @@ function HomeContent() {
               {[
                 { name: 'nome', label: 'Nome', placeholder: 'Seu nome completo', type: 'text', autoComplete: 'name' },
                 { name: 'empresa', label: 'Empresa', placeholder: 'Nome da empresa', type: 'text', autoComplete: 'organization' },
-                { name: 'email', label: 'E-mail', placeholder: 'seu@email.com', type: 'email', autoComplete: 'email' },
-                { name: 'whatsapp', label: 'WhatsApp', placeholder: '(11) 99999-9999', type: 'tel', autoComplete: 'off' },
               ].map((field) => (
                 <div key={field.name} className="flex flex-col gap-1.5">
                   <label
