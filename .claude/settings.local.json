@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-import-alias --yes)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --no-import-alias --yes --name diagnostico)",
+      "Read(//Users/sme/Documents/Claude/Projects/**)",
+      "Bash(npx create-next-app@latest diagnostico-temp --typescript --tailwind --app --no-src-dir --no-import-alias --yes)",
+      "Bash(rm -rf \"/Users/sme/Documents/Claude/Projects/diagnostico-temp\")",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(curl -s \"https://nextjs.org/docs/messages/middleware-to-proxy\")",
+      "Bash(cp middleware.ts proxy.ts)",
+      "Bash(rm middleware.ts)",
+      "Bash(ls /Users/sme/Documents/Claude/Projects/Diagnóstico/*.ts /Users/sme/Documents/Claude/Projects/Diagnóstico/middleware*)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
